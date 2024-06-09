@@ -24,15 +24,6 @@
 		use:enhance
 		class="card mt-10 space-y-3 border p-10 shadow"
 	>
-		{#if $errors}
-			<p
-				in:fly={{ y: 20 }}
-				out:slide
-				class="alert alert-error text-center font-medium capitalize text-white"
-			>
-				{$errors.task}
-			</p>
-		{/if}
 		<p class="text-center text-lg font-semibold capitalize text-orange-500">
 			sveltekit form action
 		</p>
@@ -44,7 +35,13 @@
 			<Form.FieldErrors />
 		</Form.Field>
 
-		<Form.Button>Add todo</Form.Button>
+		<Form.Button>
+			{#if $delayed}
+				loading...
+			{:else}
+				Add todo
+			{/if}
+		</Form.Button>
 	</form>
 
 	<ul class="menu bg-base-200 rounded-box">
@@ -52,21 +49,10 @@
 			{#each data.todos as todo (todo.id)}
 				<li>
 					<form method="POST" action="?/delete" class="flex items-center justify-between">
-						<input type="hidden" name="id" value={todo.id} />
 						<span>{todo.task}</span>
-						<img
-							src={`http://127.0.0.1:8090/api/files/users/${todo?.expand?.user?.id}/${todo?.expand?.user?.avatar}`}
-							class="avatar h-10 w-10"
-							alt=""
-						/>
-						<button class="h-5 w-5"><img src="./remove.svg" alt="" /></button>
 					</form>
 				</li>
 			{/each}
-			{#if $delayed}
-				loading
-			{/if}
 		{/if}
-		<img src="" alt="" />
 	</ul>
 </div>

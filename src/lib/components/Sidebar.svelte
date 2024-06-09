@@ -1,53 +1,81 @@
 <script lang="ts">
 	import { cn } from '$lib/utils';
-	import { ActivitySquare, CircleUser, Instagram, Menu, Settings } from 'lucide-svelte';
+	import { ActivitySquare, Bookmark, CircleUser, Instagram, Menu, Settings } from 'lucide-svelte';
 	import * as DropdownMenu from '$lib/components/ui/dropdown-menu';
-
+	import * as Dialog from '$lib/components/ui/dialog';
+	import { Button } from '$lib/components/ui/button';
+	import Sun from 'lucide-svelte/icons/sun';
+	import Moon from 'lucide-svelte/icons/moon';
+	import { toggleMode, mode } from 'mode-watcher';
+	import Home from './icons/Home.svelte';
+	import Search from './icons/Search.svelte';
+	import Explore from './icons/Explore.svelte';
+	import Reels from './icons/Reels.svelte';
+	import Messenger from './icons/Messenger.svelte';
+	import Notifications from './icons/Notifications.svelte';
+	import NewPost from './icons/NewPost.svelte';
+	import Media from './icons/media.svelte';
+	import Save from './icons/Save.svelte';
+	import Logo from './icons/Logo.svelte';
 	const sidebarItems = [
 		{
 			text: 'home',
-			icon: 'Home.svg'
+			icon: Home,
+			href: '/'
 		},
 		{
 			text: 'search',
-			icon: 'Search.svg'
+			icon: Search
 		},
 		{
 			text: 'explore',
-			icon: 'Explore.svg'
+			icon: Explore
 		},
 		{
 			text: 'reels',
-			icon: 'Reels.svg'
+			icon: Reels,
+			href: '/accounts/edit'
 		},
 		{
 			text: 'messages',
-			icon: 'Messenger.svg'
+			icon: Messenger,
+			href: '/sphade_cigar'
 		},
 		{
 			text: 'notifications',
-			icon: 'Notifications.svg'
+			icon: Notifications
 		},
 		{
 			text: 'Create',
-			icon: 'New post.svg'
+			icon: NewPost
 		}
 	];
+	let openModal = $state(false);
 </script>
 
 <aside
 	class="fixed flex h-full min-h-screen w-fit flex-col border-r bg-background p-3 md:w-[244px]"
 >
 	<div class="my-8 pl-3">
-		<img src="./icons/Instagram.svg" class=" hidden w-fit md:inline-block" alt="" />
+		<div class=" hidden w-fit md:inline-block">
+			<Logo />
+		</div>
 		<Instagram class="md:hidden" />
 	</div>
 	<div class="flex flex-1 flex-col gap-2">
-		{#each sidebarItems as { text, icon }}
-			<div
-				class="flex cursor-pointer items-center gap-1 rounded-md p-3 text-sm capitalize hover:bg-slate-100"
+		{#each sidebarItems as { text, icon, href }}
+			<svelte:element
+				this={href ? 'a' : text === 'Create' ? 'button' : 'div'}
+				{href}
+				role="none"
+				onclick={() => {
+					if (text === 'Create') {
+						openModal = true;
+					}
+				}}
+				class="flex cursor-pointer items-center gap-1 rounded-md p-3 text-sm capitalize hover:bg-muted"
 			>
-				<img src={`./icons/${icon}`} alt="" />
+				<svelte:component this={icon}></svelte:component>
 				<div
 					class={cn('ml-4 hidden md:inline-flex', {
 						'font-bold': text === 'home'
@@ -55,10 +83,10 @@
 				>
 					{text}
 				</div>
-			</div>
+			</svelte:element>
 		{/each}
 		<div
-			class="flex cursor-pointer items-center gap-1 rounded-md p-3 text-sm capitalize hover:bg-slate-100"
+			class="flex cursor-pointer items-center gap-1 rounded-md p-3 text-sm capitalize hover:bg-muted"
 		>
 			<CircleUser />
 			<div class="ml-4 hidden md:inline-block">Profile</div>
@@ -67,7 +95,7 @@
 
 	<DropdownMenu.Root>
 		<DropdownMenu.Trigger
-			class="flex cursor-pointer items-center gap-1 rounded-md p-3 text-sm capitalize hover:bg-slate-100"
+			class="flex cursor-pointer items-center gap-1 rounded-md p-3 text-sm capitalize hover:bg-muted"
 		>
 			<Menu />
 			<div class="ml-4 hidden md:inline-block">Profile</div>
@@ -81,12 +109,20 @@
 				<DropdownMenu.Item class="flex cursor-pointer items-center gap-2 p-3"
 					><ActivitySquare /> your activity</DropdownMenu.Item
 				>
-				<DropdownMenu.Item class="flex cursor-pointer items-center gap-2 p-3"
-					><img src="./icons/Save.svg" alt="" /> Saved</DropdownMenu.Item
+				<DropdownMenu.Item class="flex cursor-pointer items-center gap-2 p-3">
+					<Bookmark /> Saved</DropdownMenu.Item
 				>
-				<DropdownMenu.Item class="flex cursor-pointer items-center gap-2 p-3"
-					><img src="./icons/Save.svg" alt="" /> Switch apperance</DropdownMenu.Item
-				>
+				<DropdownMenu.Item onclick={toggleMode} class="flex cursor-pointer items-center gap-2 p-3"
+					>{#if $mode === 'dark'}
+						<Sun />
+						light mode
+					{:else if $mode === 'light'}
+						<Moon />
+						Dark mode
+					{/if}
+
+					<span class="sr-only">Toggle theme</span>
+				</DropdownMenu.Item>
 				<DropdownMenu.Separator class="h-2" />
 
 				<DropdownMenu.Item class="p-3">Logout</DropdownMenu.Item>
@@ -94,3 +130,20 @@
 		</DropdownMenu.Content>
 	</DropdownMenu.Root>
 </aside>
+
+<Dialog.Root bind:open={openModal}>
+	<Dialog.Content class="max-w-[450px]">
+		<Dialog.Header>
+			<Dialog.Title>Are you sure absolutely sure?</Dialog.Title>
+			<Dialog.Description class="grid h-[450px] place-items-center  ">
+				<div class="space-y-3 text-center">
+					<div class="mx-auto w-fit">
+						<Media />
+					</div>
+					<p>Drag Photos and videos here</p>
+					<Button size="sm" class="bg-blue-500">select from computers</Button>
+				</div>
+			</Dialog.Description>
+		</Dialog.Header>
+	</Dialog.Content>
+</Dialog.Root>

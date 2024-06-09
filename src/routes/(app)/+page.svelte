@@ -4,12 +4,12 @@
 	import { CircleUser } from 'lucide-svelte';
 </script>
 
-<div class="flex gap-5 pt-6">
+<a href="todo">navigate to the todo page</a>
+<div class="flex gap-5">
 	<div class="flex-1 flex-shrink">
 		<div class="mx-auto w-full max-w-[630px]">
 			<Stories />
-
-			<div class="mt-5 space-y-5">
+			<div class="mt-5 space-y-5 px-10 md:px-20">
 				{#each { length: 10 } as _}
 					<TweetCard />
 				{/each}
@@ -21,8 +21,8 @@
 		<div class="flex items-center gap-3">
 			<CircleUser class="size-11" />
 			<div>
-				<p class="font-medium">lawal_adebola</p>
-				<p class="text-muted-foreground">fawaz</p>
+				<p class="font-medium">KING</p>
+				<p class="text-muted-foreground">F3R0</p>
 			</div>
 		</div>
 		<div class="mb-3 mt-8 flex items-center justify-between">

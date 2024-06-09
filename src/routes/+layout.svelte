@@ -1,13 +1,10 @@
 <script lang="ts">
-	import Sidebar from '$lib/components/Sidebar.svelte';
 	import '@fontsource-variable/inter';
+	import { ModeWatcher } from 'mode-watcher';
 	import '../app.css';
 	let { children } = $props();
 </script>
 
-<div class="">
-	<Sidebar />
-	<main class="ml-[73px] md:ml-[244px]">
-		{@render children()}
-	</main>
-</div>
+<ModeWatcher />
+
+{@render children()}

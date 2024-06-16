@@ -1,12 +1,12 @@
-import { pgTable, serial, text, timestamp, varchar } from 'drizzle-orm/pg-core';
+import { pgTable, text, timestamp, varchar } from 'drizzle-orm/pg-core';
 
 // Create the Drizzle table using the Zod schema
 export const userTable = pgTable('user', {
-	id: serial('id').primaryKey(),
+	id: text('id').primaryKey(),
 	firstName: varchar('first_name', { length: 50 }).notNull(),
 	lastName: varchar('last_name', { length: 50 }).notNull(),
 	email: text('email').notNull().unique(),
-	passwordHash: text('password_hash')
+	passwordHash: text('password_hash').notNull()
 });
 
 export const sessionTable = pgTable('session', {

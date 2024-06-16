@@ -2,6 +2,7 @@
 	import Stories from '$lib/components/Stories.svelte';
 	import TweetCard from '$lib/components/TweetCard.svelte';
 	import { CircleUser } from 'lucide-svelte';
+	let { data } = $props();
 </script>
 
 <a href="todo">navigate to the todo page</a>
@@ -21,8 +22,8 @@
 		<div class="flex items-center gap-3">
 			<CircleUser class="size-11" />
 			<div>
-				<p class="font-medium">KING</p>
-				<p class="text-muted-foreground">F3R0</p>
+				<p class="font-medium">{data.user?.firstName} {data.user?.lastName}</p>
+				<p class="text-muted-foreground">{data.user?.email}</p>
 			</div>
 		</div>
 		<div class="mb-3 mt-8 flex items-center justify-between">

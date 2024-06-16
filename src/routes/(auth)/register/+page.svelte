@@ -38,22 +38,21 @@
 					<Form.FieldErrors />
 				</Form.Field>
 			</div>
-			<div class="grid gap-2">
-				<Form.Field {form} name="email">
-					<Form.Control let:attrs>
-						<Input {...attrs} placeholder="email" bind:value={$formData.email} />
-					</Form.Control>
-					<Form.FieldErrors />
-				</Form.Field>
-			</div>
-			<div class="grid gap-2">
-				<Form.Field {form} name="password">
-					<Form.Control let:attrs>
-						<Input {...attrs} placeholder="password" bind:value={$formData.password} />
-					</Form.Control>
-					<Form.FieldErrors />
-				</Form.Field>
-			</div>
+
+			<Form.Field {form} name="email">
+				<Form.Control let:attrs>
+					<Input {...attrs} placeholder="email" bind:value={$formData.email} />
+				</Form.Control>
+				<Form.FieldErrors />
+			</Form.Field>
+
+			<Form.Field {form} name="password">
+				<Form.Control let:attrs>
+					<Input {...attrs} placeholder="password" bind:value={$formData.password} />
+				</Form.Control>
+				<Form.FieldErrors />
+			</Form.Field>
+
 			<Button type="submit" class="w-full bg-blue-500 hover:bg-blue-600">
 				{#if $delayed}
 					<Loader class="size-4 animate-spin" />

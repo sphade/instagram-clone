@@ -2,7 +2,6 @@
 	import type { HTMLInputAttributes } from 'svelte/elements';
 	import type { InputEvents } from './index.js';
 	import { cn } from '$lib/utils.js';
-	import { getFormField } from 'formsnap';
 
 	type $$Props = HTMLInputAttributes;
 	type $$Events = InputEvents;
@@ -14,7 +13,6 @@
 	// Workaround for https://github.com/sveltejs/svelte/issues/9305
 	// Fixed in Svelte 5, but not backported to 4.x.
 	export let readonly: $$Props['readonly'] = undefined;
-	const { errors, fieldErrorsId } = getFormField();
 </script>
 
 <input
@@ -42,7 +40,3 @@
 	on:wheel|passive
 	{...$$restProps}
 />
-
-{#if $errors.length > 0}
-	there was an error
-{/if}

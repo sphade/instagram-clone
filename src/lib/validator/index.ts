@@ -10,4 +10,7 @@ export const registerSchema = createInsertSchema(userTable, {
 	password: z.string().min(8)
 });
 
-registerSchema.parse;
+export const loginSchema = z.object({
+	email: z.string().email(),
+	password: z.string().min(8)
+});

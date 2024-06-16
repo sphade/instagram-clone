@@ -3,6 +3,7 @@ import { dev } from '$app/environment';
 import { DrizzlePostgreSQLAdapter } from '@lucia-auth/adapter-drizzle';
 import { db } from './db';
 import { sessionTable, userTable } from '$lib/schema';
+import type { User } from '$lib/types';
 
 const adapter = new DrizzlePostgreSQLAdapter(db, sessionTable, userTable);
 
@@ -16,7 +17,9 @@ export const lucia = new Lucia(adapter, {
 	getUserAttributes: (attributes) => {
 		return {
 			// we don't need to expose the password hash!
-			email: attributes.email
+			email: attributes.email,
+			firstName: attributes.firstName,
+			lastName: attributes.lastName
 		};
 	}
 });
@@ -24,11 +27,6 @@ export const lucia = new Lucia(adapter, {
 declare module 'lucia' {
 	interface Register {
 		Lucia: typeof lucia;
-		DatabaseUserAttributes: {
-			email: string;
-		};
-		ddddddd: {
-			email: string;
-		};
+		DatabaseUserAttributes: User;
 	}
 }

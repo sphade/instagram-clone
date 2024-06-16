@@ -17,6 +17,7 @@
 	import Media from './icons/media.svelte';
 	import Save from './icons/Save.svelte';
 	import Logo from './icons/Logo.svelte';
+	import { enhance } from '$app/forms';
 	const sidebarItems = [
 		{
 			text: 'home',
@@ -104,8 +105,8 @@
 			<DropdownMenu.Group>
 				<DropdownMenu.Item class="flex cursor-pointer items-center gap-2 p-3">
 					<Settings />
-					Setting</DropdownMenu.Item
-				>
+					<a href="/">Setting</a>
+				</DropdownMenu.Item>
 				<DropdownMenu.Item class="flex cursor-pointer items-center gap-2 p-3"
 					><ActivitySquare /> your activity</DropdownMenu.Item
 				>
@@ -125,7 +126,11 @@
 				</DropdownMenu.Item>
 				<DropdownMenu.Separator class="h-2" />
 
-				<DropdownMenu.Item class="p-3">Logout</DropdownMenu.Item>
+				<DropdownMenu.Item type="submit" class="p-3">
+					<form action="/?/logOut" method="POST" use:enhance>
+						<button type="submit" class="w-full">Log out</button>
+					</form>
+				</DropdownMenu.Item>
 			</DropdownMenu.Group>
 		</DropdownMenu.Content>
 	</DropdownMenu.Root>

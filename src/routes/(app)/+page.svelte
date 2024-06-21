@@ -5,7 +5,6 @@
 	let { data } = $props();
 </script>
 
-<a href="todo">navigate to the todo page</a>
 <div class="flex gap-5">
 	<div class="flex-1 flex-shrink">
 		<div class="mx-auto w-full max-w-[630px]">

@@ -77,11 +77,8 @@ export const handleAuth: Handle = async ({ event, resolve }) => {
 		!event.locals.user &&
 		!['/login', '/register'].includes(event.url.pathname)
 	) {
-		console.log('i ran');
 		redirect(303, '/login');
 	} else {
-		console.log('i ran too');
-
 		return resolve(event);
 	}
 };

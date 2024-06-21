@@ -47,7 +47,6 @@
     "@fontsource-variable/inter": "^5.0.18",
     "@lucia-auth/adapter-drizzle": "^1.0.7",
     "@neondatabase/serverless": "^0.9.3",
-    "@node-rs/argon2": "^1.8.3",
     "@sveltejs/enhanced-img": "^0.2.1",
     "bits-ui": "^0.21.10",
     "clsx": "^2.1.1",

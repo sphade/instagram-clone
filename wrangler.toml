@@ -2,6 +2,7 @@
 name = "instagram-clone"
 compatibility_date = "2024-05-29"
 pages_build_output_dir = ".svelte-kit/cloudflare"
+compatibility_flags = [ "nodejs_compat" ]
 
 # Automatically place your workloads in an optimal location to minimize latency.
 # If you are running back-end logic in a Pages Function, running it closer to your back-end infrastructure
@@ -25,10 +26,10 @@ pages_build_output_dir = ".svelte-kit/cloudflare"
 
 # Bind a D1 database. D1 is Cloudflare’s native serverless SQL database.
 # Docs: https://developers.cloudflare.com/pages/functions/bindings/#d1-databases
-[[d1_databases]]
-binding = "DB" # i.e. available in your Worker on env.DB
-database_name = "testDb"
-database_id = "bcc02974-0467-453f-af24-6f3826add0b1"
+# [[d1_databases]]
+# binding = "DB" 
+# database_name = "testDb"
+# database_id = "bcc02974-0467-453f-af24-6f3826add0b1"
 
 # Bind a Durable Object. Durable objects are a scale-to-zero compute primitive based on the actor model.
 # Durable Objects can live for as long as needed. Use these when you need a long-running "server", such as in realtime apps.

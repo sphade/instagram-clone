@@ -2,9 +2,9 @@ import { userTable } from '$lib/schema';
 import { lucia } from '$lib/server/auth.js';
 import { db } from '$lib/server/db';
 import { loginSchema } from '$lib/validator';
-import { verify } from '@node-rs/argon2';
 import { fail, redirect } from '@sveltejs/kit';
 import { eq } from 'drizzle-orm';
+import { Scrypt } from 'lucia';
 import { setError, superValidate } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
 
@@ -23,12 +23,9 @@ export const actions = {
 		if (!user) {
 			return setError(form, 'email', 'this email is not correct');
 		}
-		const validPassword = await verify(user.passwordHash, form.data.password, {
-			memoryCost: 19456,
-			timeCost: 2,
-			outputLen: 32,
-			parallelism: 1
-		});
+		const scrypt = new Scrypt();
+		const validPassword = await scrypt.verify(user.passwordHash, form.data.password);
+
 		if (!validPassword) {
 			return setError(form, 'password', 'invalid password');
 		}

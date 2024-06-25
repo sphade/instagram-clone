@@ -7,8 +7,7 @@ import { eq } from 'drizzle-orm';
 import { generateIdFromEntropySize } from 'lucia';
 import { fail, setError, superValidate } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
-import { hash } from '@node-rs/argon2';
-
+import { Scrypt } from 'lucia';
 export const load = async () => {
 	const form = await superValidate(zod(registerSchema));
 	return { form };
@@ -21,12 +20,9 @@ export const actions = {
 			return fail(400, { form });
 		}
 		const { email, firstName, lastName, password } = form.data;
-		const passwordHash = await hash(password, {
-			memoryCost: 19456,
-			timeCost: 2,
-			outputLen: 32,
-			parallelism: 1
-		});
+		const scrypt = new Scrypt();
+		const passwordHash = await scrypt.hash(password);
+
 		const userId = generateIdFromEntropySize(10);
 
 		const user = await db

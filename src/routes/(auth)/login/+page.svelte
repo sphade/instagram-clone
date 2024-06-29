@@ -33,7 +33,12 @@
 
 			<Form.Field {form} name="password">
 				<Form.Control let:attrs>
-					<Input {...attrs} placeholder="password" bind:value={$formData.password} />
+					<Input
+						{...attrs}
+						type="password"
+						placeholder="password"
+						bind:value={$formData.password}
+					/>
 				</Form.Control>
 				<Form.FieldErrors />
 			</Form.Field>
@@ -47,8 +52,8 @@
 			</Button>
 		</form>
 		<div class="mt-4 text-center text-sm">
-			Already have an account?
-			<a href="/login" class="underline"> Sign in </a>
+			Already have an account?,
+			<a href="/register" class="underline"> register </a>
 		</div>
 	</Card.Content>
 </Card.Root>

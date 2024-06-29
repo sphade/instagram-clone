@@ -10,8 +10,8 @@
 		<div class="mx-auto w-full max-w-[630px]">
 			<Stories />
 			<div class="mt-5 space-y-5 px-10 md:px-20">
-				{#each { length: 10 } as _}
-					<TweetCard />
+				{#each data.posts as post}
+					<TweetCard {...post} />
 				{/each}
 			</div>
 		</div>

@@ -2,6 +2,9 @@
 	import { CircleUser, Grid, Heart, MessageCircle, Plus } from 'lucide-svelte';
 	import { Button } from '$lib/components/ui/button';
 	import { Separator } from '$lib/components/ui/separator';
+	import { CldImage } from 'svelte-cloudinary';
+
+	let { data } = $props();
 </script>
 
 <div class="px-10 md:px-20">
@@ -12,11 +15,15 @@
 
 		<div class="space-y-5">
 			<div class="flex items-center gap-5">
-				<p class="text-xl">sphade_cigar</p>
-				<Button variant="secondary">Edit profile</Button>
+				<p class="text-xl">{data.userWithPost.firstName}</p>
+				{#if data.userWithPost.id === data.user.id}
+					<Button variant="secondary" href="/accounts/edit">Edit profile</Button>
+				{:else}
+					<Button>Follow</Button>
+				{/if}
 			</div>
 			<div class="flex items-center gap-5 text-lg">
-				<p>1 post</p>
+				<p>{data.userWithPost?.posts.length} post</p>
 				<p>11 followers</p>
 				<p>91 following</p>
 			</div>
@@ -51,20 +58,29 @@
 	</div>
 
 	<div class="grid grid-cols-1 gap-7 md:grid-cols-2 lg:grid-cols-3">
-		<div class="group relative h-[308px] cursor-pointer">
-			<img src="./dj.jpg" class="h-full w-full" alt="" />
-			<div
-				class="absolute top-0 hidden h-full w-full items-center justify-center gap-10 bg-black/20 group-hover:flex"
-			>
-				<div class="flex items-center gap-2 text-white">
-					<Heart class="fill-white" />
-					4
-				</div>
-				<div class="flex items-center gap-2 text-white">
-					<MessageCircle class="fill-white" />
-					4
+		{#each data?.userWithPost.posts as post}
+			<div class="group relative h-[308px] cursor-pointer">
+				<CldImage
+					width="960"
+					height="600"
+					src={post.imageUrl}
+					class="h-full w-full rounded object-cover"
+					sizes="100vw"
+					alt="post image"
+				/>
+				<div
+					class="absolute top-0 hidden h-full w-full items-center justify-center gap-10 bg-black/20 group-hover:flex"
+				>
+					<div class="flex items-center gap-2 text-white">
+						<Heart class="fill-white" />
+						4
+					</div>
+					<div class="flex items-center gap-2 text-white">
+						<MessageCircle class="fill-white" />
+						4
+					</div>
 				</div>
 			</div>
-		</div>
+		{/each}
 	</div>
 </div>

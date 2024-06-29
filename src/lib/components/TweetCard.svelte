@@ -4,19 +4,29 @@
 	import * as Dialog from '$lib/components/ui/dialog';
 	import { pushState } from '$app/navigation';
 	import { page } from '$app/stores';
+	import type { Post, PostWithUser } from '$lib/types';
+	import { CldImage } from 'svelte-cloudinary';
+
+	let { caption, imageUrl, user, userId }: PostWithUser = $props();
 </script>
 
 <div class=" ">
-	<div class="mb-3 flex items-center gap-3">
+	<a href={userId} class="mb-3 flex items-center gap-3">
 		<CircleUser />
 		<div class="">
-			<p class="text-sm font-medium">memez.ng</p>
-			<p class="text-xs text-muted-foreground">funny videos</p>
+			<p class="text-sm font-medium">{user.firstName}</p>
+			<p class="text-xs text-muted-foreground">{user.email}</p>
 		</div>
 		<Ellipsis class="ml-auto w-fit" />
-	</div>
-	<img src="./electronics.png" class="h-[585px] w-full rounded bg-gray-100 object-contain" alt="" />
-
+	</a>
+	<CldImage
+		width="960"
+		height="600"
+		src={imageUrl}
+		class="h-[585px] w-full rounded bg-gray-100 object-contain"
+		sizes="100vw"
+		alt="post image"
+	/>
 	<div class="my-2 flex items-center gap-5">
 		<Heart />
 		<MessageCircle />
@@ -27,7 +37,7 @@
 
 	<p class="mb-2 text-sm font-medium">100,4480 likes</p>
 	<p class="mb-2 text-sm font-medium">
-		memez.ng: <span class="font-light">which slide i your favorite</span>
+		{user.firstName}: <span class="font-light">{caption}</span>
 	</p>
 
 	<button class=" mb-2 text-sm capitalize text-muted-foreground">view all 24 comments</button>

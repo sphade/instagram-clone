@@ -1,4 +1,5 @@
-import { pgTable, text, timestamp, varchar } from 'drizzle-orm/pg-core';
+import { relations } from 'drizzle-orm';
+import { integer, pgTable, serial, text, timestamp, varchar } from 'drizzle-orm/pg-core';
 
 // Create the Drizzle table using the Zod schema
 export const userTable = pgTable('user', {
@@ -19,3 +20,53 @@ export const sessionTable = pgTable('session', {
 		mode: 'date'
 	}).notNull()
 });
+
+export const postTable = pgTable('posts', {
+	id: serial('id').primaryKey(),
+	userId: text('user_id')
+		.references(() => userTable.id)
+		.notNull(),
+	caption: text('caption'),
+	imageUrl: text('image_url').notNull(),
+	createdAt: timestamp('created_at').defaultNow().notNull(),
+	updatedAt: timestamp('updated_at').defaultNow().notNull()
+});
+export const likeTable = pgTable('likes', {
+	id: serial('id').primaryKey(),
+	postId: integer('post_id')
+		.references(() => postTable.id)
+		.notNull(),
+	userId: text('user_id')
+		.references(() => userTable.id)
+		.notNull(),
+	createdAt: timestamp('created_at').defaultNow().notNull()
+});
+
+export const todoTable = pgTable('todos', {
+	id: serial('id').primaryKey(),
+	content: text('content').notNull(),
+	userId: text('user_id')
+		.notNull()
+		.references(() => userTable.id),
+	createdAt: timestamp('created_at').defaultNow().notNull(),
+	updatedAt: timestamp('updated_at').defaultNow().notNull()
+});
+
+export const userRelation = relations(userTable, ({ many }) => ({
+	posts: many(postTable),
+	todos: many(todoTable)
+}));
+export const postRelation = relations(postTable, ({ one, many }) => ({
+	user: one(userTable, {
+		fields: [postTable.userId],
+		references: [userTable.id]
+	}),
+	likes: many(likeTable)
+}));
+
+export const todoRelation = relations(todoTable, ({ one }) => ({
+	user: one(userTable, {
+		fields: [todoTable.userId],
+		references: [userTable.id]
+	})
+}));

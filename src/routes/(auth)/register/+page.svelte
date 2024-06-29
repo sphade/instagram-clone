@@ -48,7 +48,12 @@
 
 			<Form.Field {form} name="password">
 				<Form.Control let:attrs>
-					<Input {...attrs} placeholder="password" bind:value={$formData.password} />
+					<Input
+						{...attrs}
+						type="password"
+						placeholder="password"
+						bind:value={$formData.password}
+					/>
 				</Form.Control>
 				<Form.FieldErrors />
 			</Form.Field>

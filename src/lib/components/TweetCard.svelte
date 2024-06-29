@@ -1,10 +1,7 @@
 <script lang="ts">
 	import { Bookmark, CircleUser, Ellipsis, Heart, MessageCircle, Send } from 'lucide-svelte';
 	import { Separator } from '$lib/components/ui/separator';
-	import * as Dialog from '$lib/components/ui/dialog';
-	import { pushState } from '$app/navigation';
-	import { page } from '$app/stores';
-	import type { Post, PostWithUser } from '$lib/types';
+	import type { PostWithUser } from '$lib/types';
 	import { CldImage } from 'svelte-cloudinary';
 
 	let { caption, imageUrl, user, userId }: PostWithUser = $props();

@@ -42,19 +42,8 @@ export const likeTable = pgTable('likes', {
 	createdAt: timestamp('created_at').defaultNow().notNull()
 });
 
-export const todoTable = pgTable('todos', {
-	id: serial('id').primaryKey(),
-	content: text('content').notNull(),
-	userId: text('user_id')
-		.notNull()
-		.references(() => userTable.id),
-	createdAt: timestamp('created_at').defaultNow().notNull(),
-	updatedAt: timestamp('updated_at').defaultNow().notNull()
-});
-
 export const userRelation = relations(userTable, ({ many }) => ({
-	posts: many(postTable),
-	todos: many(todoTable)
+	posts: many(postTable)
 }));
 export const postRelation = relations(postTable, ({ one, many }) => ({
 	user: one(userTable, {
@@ -62,11 +51,4 @@ export const postRelation = relations(postTable, ({ one, many }) => ({
 		references: [userTable.id]
 	}),
 	likes: many(likeTable)
-}));
-
-export const todoRelation = relations(todoTable, ({ one }) => ({
-	user: one(userTable, {
-		fields: [todoTable.userId],
-		references: [userTable.id]
-	})
 }));

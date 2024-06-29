@@ -23,7 +23,6 @@
 	import Notifications from './icons/Notifications.svelte';
 	import NewPost from './icons/NewPost.svelte';
 	import Media from './icons/media.svelte';
-	import Save from './icons/Save.svelte';
 	import Logo from './icons/Logo.svelte';
 	import { fileProxy, superForm } from 'sveltekit-superforms';
 	import { postSchema } from '$lib/validator';
